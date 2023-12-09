@@ -1,7 +1,6 @@
 let listaAmigos = [];
 let amigosIncluidos = document.getElementById('lista-amigos');
 let paresNomes = document.getElementById('lista-sorteio');
-let i = 1;
 
 function adicionar() {
     listaAmigos.push(document.getElementById('nome-amigo').value);
@@ -9,7 +8,7 @@ function adicionar() {
     amigosIncluidos.textContent = listaAmigos;
 }
 
-function reiniciar () {
+function reiniciar() {
     listaAmigos = [];
     amigosIncluidos.textContent = listaAmigos;
     paresNomes.innerHTML = '';
@@ -17,21 +16,25 @@ function reiniciar () {
 
 function sortear() {
     paresNomes.innerHTML = '';
-    while (listaAmigos.length > 0) {
-        let numSorteado = parseInt(Math.random() * listaAmigos.length);
-        let nomeSorteado = listaAmigos[numSorteado];
-        exibeNomes(nomeSorteado);
-        listaAmigos.splice(numSorteado,1);
-        amigosIncluidos.textContent = '';
-    } 
+    let listaAleatoria = [];
+    let i = 0;
+    while (listaAleatoria.length < listaAmigos.length) {
+        let numAleatorio = Math.floor((Math.random() * listaAmigos.length));
+        if (!listaAleatoria.includes(numAleatorio) && numAleatorio!=listaAleatoria.length) {
+            listaAleatoria.push(numAleatorio);
+            i++;
+        }
+    }
+    exibeNomes(listaAleatoria);
+    amigosIncluidos.textContent = '';
+    listaAmigos = [];
 }
 
-function exibeNomes(nomeSorteado) {
-    paresNomes.innerHTML += nomeSorteado;
-    if (i % 2 == 0) {
-        paresNomes.innerHTML += '<BR>';
-    } else {
-        paresNomes.innerHTML += ' e ';
+function exibeNomes(listaAleatoria) {
+    let i = 0;
+    while (i < listaAmigos.length) {
+        paresNomes.innerHTML += listaAmigos[i] + ' > ';
+        paresNomes.innerHTML += listaAmigos[listaAleatoria[i]] + '<br>';
+        i++;
     }
-    i++;
 }
